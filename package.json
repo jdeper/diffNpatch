@@ -1,0 +1,10 @@
+{
+  "name": "ungit-diffNpatch",
+  "author": "Jedsadang Pipatbanjong <jdeper@gmail.com>",
+  "description": "ungit plugin to diff between commited point and patch to zip file",
+  "version": "0.1.0",
+   "repository": {
+    "type": "git",
+    "url": "https://github.com/jdeper/diffNpatch.git"
+  },
+ }

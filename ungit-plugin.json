@@ -1,0 +1,7 @@
+{
+	"name": "diffNpatch",
+	"server": "backend.js",
+	"exports": {
+    	"javascript": "diffNpatch.js"
+  	}
+}
