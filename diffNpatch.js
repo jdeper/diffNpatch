@@ -24,11 +24,14 @@ GraphActions.DiffNpatch.prototype.perform = function(callback) {
   var self = this;
   var server = this.server;
   var repoPath = this.graph.repoPath;
-  var parent_sha1 = this.node.belowNode.sha1;
-  console.log(this.node.belowNode.sha1);
+  var parent_sha1 = this.node.sha1;
+  if(typeof this.node.belowNode != 'undefined'){
+  		parent_sha1 = this.node.belowNode.sha1;
+  }
+
   var patch_name = prompt("Patch name?");
   console.log(patch_name);
-  server.get('/plugins/diffNpatch/pack', { path: repoPath ,pid: parent_sha1}, function(err, hook) {
+  server.get('/plugins/diffNpatch/pack', { path: repoPath ,pid: parent_sha1,patch_name:patch_name}, function(err, hook) {
     console.log(err, hook);
     callback();
   });

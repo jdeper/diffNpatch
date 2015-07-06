@@ -12,6 +12,42 @@ function ensurePathExists(req, res, next) {
   }
 }
 
+function readConf(filePath,onSuccess,onError){
+
+	fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
+	    if (!err){
+	    console.log('received data: ' + data);
+			onSuccess(data);
+	    }else{
+	        console.log(err);
+	    	onError(err);
+	    }
+
+	});
+}
+function execPatch(data){
+	// var conf = eval( "("+data+")" );
+	return res.json(conf);
+// 	var d = new Date();
+// 		var n = d.getTime();
+//     	var	zipName = path.join(tmpPath, "patch_"+n+".zip");
+
+//     	var pack_cmd = "cd '"+repoPath+"' ;zip -r '"+zipName+"'  $(git diff --name-only HEAD "+parentSha+" ) ;cp ";
+
+
+
+// ;cp '".$patch_path."tmp/".$zipName."' '".$destZip."' ;cd '".$destZip."' ;unzip '".$zipName."' ;rm '".$zipName."'
+
+
+//     	child_process.exec(pack_cmd,
+//             function (err, stdout, stderr) {
+//               if (err) return res.json( { error: err, stdout: stdout, stderr: stderr });
+//               res.json({c:'ok'});
+//         	}
+//         );
+}
+
+
 exports.install = function(env) {
     var app = env.app;
     var ensureAuthenticated = env.ensureAuthenticated;
@@ -31,24 +67,20 @@ exports.install = function(env) {
     app.get(env.httpPath + '/pack', ensureAuthenticated, ensurePathExists, function(req, res) {
     	var repoPath = req.query.path;
     	var parentSha = req.query.pid;
+    	var patch_name = req.query.patch_name;
     	var patchPath = path.join(repoPath, '..','patch');
+    	var patchConf = path.join(patchPath, 'patch.conf');
     	var tmpPath = path.join(repoPath, '..', 'patch', 'tmp');
     	if (!fs.existsSync(tmpPath)) {
     		var mkdir_cmd = "mkdir -p "+ tmpPath
     		child_process.execSync(mkdir_cmd);
     	}
-    	var d = new Date();
-		var n = d.getTime();
-    	var	zipName = path.join(tmpPath, "patch_"+n+".zip");
-
-    	var pack_cmd = "cd '"+repoPath+"' ;zip -r '"+zipName+"'  $(git diff --name-only HEAD "+parentSha+" )";
-
-    	child_process.exec(pack_cmd,
-            function (err, stdout, stderr) {
-              if (err) return res.json( { error: err, stdout: stdout, stderr: stderr });
-              res.json({c:'ok'});
-        	}
-        );
+    	if (fs.existsSync(patchConf)) {
+    		readConf(patchConf, execPatch ,function(err){
+    			return res.json( { error: err, stdout: stdout, stderr: stderr });
+    		});
+    	}
+    	execPatch("");
     });
 
 };
