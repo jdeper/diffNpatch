@@ -81,7 +81,7 @@ exports.install = function(env) {
 		function(dest) {
 			self.prefix = path.join(self.patchPath,patch_name ,dest);
 			if (!fs.existsSync(self.prefix)) {
-				var mkdir_cmd = "mkdir -p "+ self.prefix
+				var mkdir_cmd = "mkdir -p '"+ self.prefix + "'";
 				child_process.exec(mkdir_cmd,
 			        function (err, stdout, stderr) {
 			          if (err) res.json( { error: err, stdout: stdout, stderr: stderr });
