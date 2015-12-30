@@ -20,6 +20,7 @@ GraphActions.DiffNpatch = function(graph, node) {
 inherits(GraphActions.DiffNpatch, GraphActions.ActionBase);
 GraphActions.DiffNpatch.prototype.text = 'Diff & patch';
 GraphActions.DiffNpatch.prototype.style = 'DiffNpatch';
+GraphActions.DiffNpatch.prototype.icon = 'octicon octicon-file-symlink-directory';
 GraphActions.DiffNpatch.prototype.perform = function(callback) {
   var self = this;
   var server = this.server;
@@ -47,7 +48,7 @@ components.register('graph', function(args) {
   var graph = graphConstructor(args);
   // var graphUpdateNode = graph.updateNode.bind(graph);
 
-	graph.getNode = function(sha1) {
+	graph.getNode = function(sha1, logEntry) {
 	  	var self = this;
 	  	// var nodeViewModel = self.getNodeOrg(sha1);
 	  	// nodeViewModel.dropareaGraphActions.push(new GraphActions.DiffNpatch(graph, self));
@@ -59,6 +60,8 @@ components.register('graph', function(args) {
 				// gitnodeviewmodel.dropareaGraphActions = [(new GraphActions.Revert(graph, this))];
 		  		nodeViewModel = this.nodesById[sha1] = gitnodeviewmodel;
 		}
+
+	  if (logEntry) nodeViewModel.setData(logEntry);
 
 	  	return nodeViewModel;
 	}

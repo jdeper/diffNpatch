@@ -1,2 +1,2 @@
 # diffNpatch
-ungit plugin to diff between commited point and patch to zip file
+ungit plugin for find the change source code files at selected node to HEAD node and compress to zip files
