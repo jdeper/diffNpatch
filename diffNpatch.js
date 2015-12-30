@@ -38,6 +38,7 @@ GraphActions.DiffNpatch.prototype.perform = function(callback) {
 	  });
 	} else {
 		alert("Patch name is empty?");
+		callback();
 	}
 }
 
