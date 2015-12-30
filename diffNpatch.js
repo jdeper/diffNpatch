@@ -31,7 +31,7 @@ GraphActions.DiffNpatch.prototype.perform = function(callback) {
   }
 
   var patch_name = prompt("Patch name?");
-	if(patch_name.trim() != ''){
+	if(patch_name != null && patch_name != "" ){
 	  server.get('/plugins/diffNpatch/pack', { path: repoPath ,pid: parent_sha1,patch_name:patch_name}, function(err, hook) {
 	    console.log(err, hook);
 	    callback();
