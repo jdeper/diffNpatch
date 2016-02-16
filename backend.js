@@ -20,7 +20,7 @@ var patchExec = function (res, prefix){
 
 	// var pack_cmd = "cd '"+repoPath+"' ;zip -r '"+zipName+"'  $(git diff --name-only HEAD "+parentSha+" ) ;cp ";
 	res.json({c:prefix});
-	// git.diffNpatchConfig.start();
+	// git.diffNpatchConfig;
 //;cp '".$patch_path."tmp/".$zipName."' '".$destZip."' ;cd '".$destZip."' ;unzip '".$zipName."' ;rm '".$zipName."'
 
     	// child_process.exec(pack_cmd,
@@ -52,12 +52,11 @@ exports.install = function(env) {
     	var config_dst = 'diffNpatch.'+self.targetEnv+'.'+key;
 
     	return git(['config', '--get',config_dst ], repoPath)
-	    // .fail(jsonFail.bind(null, res))
-	    .fail( function(){
+	    .catch( function(err){
 	    	git(['config', config_dst, default_val], repoPath)
- 			.always(cb.bind(null,default_val)).start();
+ 			.then(cb.bind(null,default_val));
 	    })
-	    .done(function(result){
+	    .then(function(result){
 	    	var lines = result.split('\n');
 	    	cb(lines[0].trim());
 	    });
@@ -71,7 +70,7 @@ exports.install = function(env) {
 		function(dest) {
 			self.patchPath = dest;
 			next();
-		}).start();
+		});
 	}
     var mkdirPrefix = function (req, res, next) {
 		var repoPath = req.query.path;
@@ -90,7 +89,7 @@ exports.install = function(env) {
 			} else {
 				next();
 			}
-		}).start();
+		});
 	}
 
     app.get(env.httpPath + '/diff', ensureAuthenticated, ensurePathExists, function(req, res) {
