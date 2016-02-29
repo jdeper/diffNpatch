@@ -43,14 +43,10 @@ exports.install = function(env) {
     var app = env.app;
     var ensureAuthenticated = env.ensureAuthenticated;
     var git = env.git;
-    // var GitTask = env.GitTask;
      var self = this;
      self.targetEnv = 'local';
     git.diffNpatchConfig = function ( repoPath, key ,default_val , cb){
-    	// var task = new GitTask();
-
     	var config_dst = 'diffNpatch.'+self.targetEnv+'.'+key;
-
     	return git(['config', '--get',config_dst ], repoPath)
 	    .catch( function(err){
 	    	git(['config', config_dst, default_val], repoPath)
