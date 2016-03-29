@@ -109,7 +109,7 @@ exports.install = function(env) {
 			var n = d.getTime();
 			var	zipName = path.join(self.prefix, "patch_"+n+".zip");
 
-			var pack_cmd = "cd '"+repoPath+"' ;git diff --name-only HEAD "+parentSha + ' | sed  -e "s/^/\\"/;s/$/\\"/" ' + "| xargs zip -r  '"+zipName+"' ;cd '"+self.prefix+"' ;unzip '"+zipName+"' ;rm '"+zipName+ "'";
+			var pack_cmd = "cd '"+repoPath+"' ;git diff --name-only HEAD "+parentSha + ' | sed  -e "s/^/\\"/;s/$/\\"/" ' + "| xargs zip -r  '"+zipName+"' ;cd '"+self.prefix+"' ;unzip -o '"+zipName+"' ;rm '"+zipName+ "'";
 
 	    	child_process.exec(pack_cmd,
 	            function (err, stdout, stderr) {
