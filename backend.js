@@ -43,14 +43,10 @@ exports.install = function(env) {
     var app = env.app;
     var ensureAuthenticated = env.ensureAuthenticated;
     var git = env.git;
-    // var GitTask = env.GitTask;
      var self = this;
      self.targetEnv = 'local';
     git.diffNpatchConfig = function ( repoPath, key ,default_val , cb){
-    	// var task = new GitTask();
-
     	var config_dst = 'diffNpatch.'+self.targetEnv+'.'+key;
-
     	return git(['config', '--get',config_dst ], repoPath)
 	    .catch( function(err){
 	    	git(['config', config_dst, default_val], repoPath)
@@ -113,7 +109,7 @@ exports.install = function(env) {
 			var n = d.getTime();
 			var	zipName = path.join(self.prefix, "patch_"+n+".zip");
 
-			var pack_cmd = "cd '"+repoPath+"' ;git diff --name-only HEAD "+parentSha + ' | sed  -e "s/^/\\"/;s/$/\\"/" ' + "| xargs zip -r  '"+zipName+"' ;cd '"+self.prefix+"' ;unzip '"+zipName+"' ;rm '"+zipName+ "'";
+			var pack_cmd = "cd '"+repoPath+"' ;git diff --name-only HEAD "+parentSha + ' | sed  -e "s/^/\\"/;s/$/\\"/" ' + "| xargs zip -r  '"+zipName+"' ;cd '"+self.prefix+"' ;unzip -o '"+zipName+"' ;rm '"+zipName+ "'";
 
 	    	child_process.exec(pack_cmd,
 	            function (err, stdout, stderr) {
