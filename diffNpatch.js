@@ -24,7 +24,7 @@ GraphActions.DiffNpatch.prototype.icon = 'octicon octicon-file-symlink-directory
 GraphActions.DiffNpatch.prototype.perform = function(callback) {
   var self = this;
   var server = this.server;
-  var repoPath = this.graph.repoPath;
+  var current_repoPath = this.graph.repoPath();
   var parent_sha1 = this.node.sha1;
   if(typeof this.node.belowNode != 'undefined'){
   		parent_sha1 = this.node.belowNode.sha1;
@@ -32,8 +32,12 @@ GraphActions.DiffNpatch.prototype.perform = function(callback) {
 
   var patch_name = prompt("Patch name?");
 	if(patch_name != null && patch_name.trim() != ''){
-	  server.get('/plugins/diffNpatch/pack', { path: repoPath ,pid: parent_sha1,patch_name:patch_name}, function(err, hook) {
-	    console.log(err, hook);
+
+  // this.server.postPromise('/revert', { path: this.graph.repoPath(), commit: this.node.sha1 })
+  //   .finally(callback);
+
+	  server.get('/plugins/diffNpatch/pack', { path: current_repoPath ,pid: parent_sha1,patch_name:patch_name}, function(err, hook) {
+	    // console.log(err, hook);
 	    callback();
 	  });
 	} else {
