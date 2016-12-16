@@ -16,9 +16,7 @@ function ensurePathExists(req, res, next) {
 var patchExec = function (res, prefix){
 	var d = new Date();
 	var n = d.getTime();
-	// var	zipName = path.join(tmpPath, "patch_"+n+".zip");
 
-	// var pack_cmd = "cd '"+repoPath+"' ;zip -r '"+zipName+"'  $(git diff --name-only HEAD "+parentSha+" ) ;cp ";
 	res.json({c:prefix});
 	// git.diffNpatchConfig;
 //;cp '".$patch_path."tmp/".$zipName."' '".$destZip."' ;cd '".$destZip."' ;unzip '".$zipName."' ;rm '".$zipName."'
